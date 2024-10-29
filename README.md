@@ -1,1 +1,32 @@
 # Baby Risco 5
+
+<p align="center">
+<img src="docs/imgs/risco5.jpeg" alt="Processor logo" width="300px">
+</p>
+
+Multi-cycle processor [RISC-V](https://riscv.org/) with RV32E implementation, developed during some days off, optimizated to TinyTapeout.
+
+## Project Official Language
+
+The official language adopted by the project is Brazilian Portuguese; therefore, most of the documentation and commits are in this language.
+
+## Implementation
+
+The processor was implemented using Verilog HDL and features a multi-cycle implementation without pipelining.
+
+## Software
+
+The `software` directory contains examples and tests written in Assembly, along with their respective memory files. Additionally, there's a script available to convert Assembly code into memory files. The official processor firmware is also available in the `software/firmware` directory.
+
+## Tests
+
+The `tests` directory includes various tests built using [Iverilog](https://steveicarus.github.io/iverilog/). All tests in this directory are compatible with Iverilog.
+
+## RISCO 5 Family:
+
+- Baby RISCO 5 - RV32E optimized to TinyTapeout: [https://github.com/JN513/Baby-Risco-5](https://github.com/JN513/Baby-Risco-5)
+- Pequeno RISCO 5 - RV32I single cicly implementation (ARCHIVED): [https://github.com/JN513/Pequeno-Risco-5/](https://github.com/JN513/Pequeno-Risco-5/)
+- RISCO 5 - RV32I/E[M]: [https://github.com/JN513/Risco-5](https://github.com/JN513/Risco-5)
+- Grande RISCO 5 - RV32I Implementation with pipeline: [https://github.com/JN513/Grande-Risco-5](https://github.com/JN513/Grande-Risco-5)
+- RISCO 5 Bodybuilder - RV64I: Still in speculative phase
+- RISCO 5S - RV32IM Simulator writing in C language: [https://github.com/JN513/Risco-5S](https://github.com/JN513/Risco-5S)
