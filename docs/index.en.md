@@ -10,14 +10,14 @@ Baby Risco 5 is an open-source processor core that implements the RV32IE instruc
 
 ## Available Resources
 
-### Baby-Risco-5 Core
+### Baby Risco 5 Core
 
 A RISC-V processor core implementing the RV32I/E[M] of RISC-V.
 
-### Baby-Risco-5 SoC
+### Baby Risco 5 SoC
 
 An SoC with the Risco-5 core containing memory and peripherals such as GPIOs and UART.
 
-### Baby-Risco-5 Tests
+### Baby Risco 5 Tests
 
 Tests written in RISC-V assembly for validating the Baby Risco 5.
