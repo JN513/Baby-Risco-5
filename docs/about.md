@@ -34,6 +34,6 @@ Autor da logo: [Mateus luck](https://www.instagram.com/mateusluck/)
 
 Licença de Hardware: [CERN-OHL-P-2.0](https://github.com/JN513/Baby-Risco-5/blob/main/LICENSE)
 
-Licença de Software: [MIT](https://github.com/JN513/Risco-5/blob/main/software/LICENSE-MIT)
+Licença de Software: [MIT](https://github.com/JN513/Baby-Risco-5/blob/main/software/LICENSE-MIT)
 
-Licença da Documentação: [CC BY-SA 4.0](https://github.com/JN513/Risco-5/blob/main/LICENSE-CC)
+Licença da Documentação: [CC BY-SA 4.0](https://github.com/JN513/Baby-Risco-5/blob/main/LICENSE-CC)

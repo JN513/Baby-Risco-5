@@ -30,3 +30,17 @@ The `tests` directory includes various tests built using [Iverilog](https://stev
 - Grande RISCO 5 - RV32I Implementation with pipeline: [https://github.com/JN513/Grande-Risco-5](https://github.com/JN513/Grande-Risco-5)
 - RISCO 5 Bodybuilder - RV64I: Still in speculative phase
 - RISCO 5S - RV32IM Simulator writing in C language: [https://github.com/JN513/Risco-5S](https://github.com/JN513/Risco-5S)
+
+## Questions and Suggestions
+
+The official documentation is available at: [https://jn513.github.io/Baby-Risco-5/](https://jn513.github.io/Baby-Risco-5/). If you have any questions or suggestions, feel free to use the [ISSUES](https://github.com/JN513/Baby-Risco-5/issues) section on GitHub. Contributions are welcome, and all [Pull requests](https://github.com/JN513/Baby-Risco-5/pulls) will be reviewed and merged if possible.
+
+## Contribution
+
+If you'd like to contribute to the project, please feel free to do so. The [CONTRIBUTING.md](https://github.com/JN513/Baby-Risco-5/blob/main/CONTRIBUTING.md) file contains the necessary instructions.
+
+## License
+
+This project is licensed under the [CERN-OHL-P-2.0 license](https://github.com/JN513/Baby-Risco-5/blob/main/LICENSE), which grants full freedom for use. The software is licensed under the [MIT License](https://github.com/JN513/Baby-Risco-5/blob/main/LICENSE-MIT), and the documentation under [CC BY-SA 4.0](https://github.com/JN513/Baby-Risco-5/blob/main/LICENSE-CC).
+
+Logo author: [Mateus Luck](https://www.instagram.com/mateusluck/)
