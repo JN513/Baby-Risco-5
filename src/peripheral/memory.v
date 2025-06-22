@@ -2,51 +2,39 @@ module Memory #(
     parameter MEMORY_FILE = "",
     parameter MEMORY_SIZE = 4096
 )(
-    input wire clk,
-    input wire reset,
-    input wire memory_read,
-    input wire memory_write,
-    input wire [2:0] option,
-    input wire [31:0] address,
-    input wire [31:0] write_data,
-    output reg memory_response,
-    output wire [31:0] read_data
+    input  wire        clk,
+
+    input  wire        rd_en_i,    // Indica uma solicitação de leitura
+    input  wire        wr_en_i,    // Indica uma solicitação de escrita
+
+    input  wire [31:0] addr_i,     // Endereço
+    input  wire [31:0] data_i,     // Dados de entrada (para escrita)
+    output wire [31:0] data_o,     // Dados de saída (para leitura)
+
+    output wire        ack_o       // Confirmação da transação
 );
 
-reg [31:0] memory [(MEMORY_SIZE/4)-1: 0];
-`ifdef __ICARUS__
-integer i;
-`endif
+    localparam BIT_INDEX = $clog2(MEMORY_SIZE) - 1'b1;
+    reg [31:0] memory [(MEMORY_SIZE/4)-1:0];
 
-//assign memory_response = memory_read | memory_write;
-
-assign read_data = memory[{2'b00, address[31:2]}];
-
-initial begin
-    memory_response = 1'b0;
-    `ifdef __ICARUS__
-        for (i = 0; i < (MEMORY_SIZE/4)-1; i = i + 1) begin
-            memory[i] = 32'h00000000; 
+    // Inicialização da memória com arquivo, se fornecido
+    initial begin
+        if (MEMORY_FILE != "") begin
+            $readmemh(MEMORY_FILE, memory);
         end
-    `endif
-
-    if(MEMORY_FILE != "") begin
-        $readmemh(MEMORY_FILE, memory, 0, (MEMORY_SIZE/4) - 1);
     end
-end
 
-always @(posedge clk ) begin
-    memory_response <= 1'b0;
+    // Leitura assíncrona
+    assign data_o = (rd_en_i) ? memory[addr_i[BIT_INDEX:2]] : 32'd0;
 
-    if(memory_read | memory_write) begin
-        memory_response <= 1'b1;
+    // Resposta assíncrona de ACK
+    assign ack_o = rd_en_i || wr_en_i;  
+
+    // Escrita síncrona
+    always @(posedge clk) begin
+        if (wr_en_i) begin
+            memory[addr_i[BIT_INDEX:2]] <= data_i;
+        end
     end
-end
 
-always @(posedge clk) begin
-    if(memory_write == 1'b1) begin
-        memory[{2'b00, address[31:2]}] <= write_data;
-    end
-end
-    
 endmodule

@@ -1,6 +1,6 @@
 module Control_Unit (
     input wire clk,
-    input wire reset,
+    input wire rst_n,
     input wire memory_response,
     input wire [6:0] instruction_opcode,
     output reg pc_write,
@@ -52,7 +52,7 @@ reg [3:0] state;
 
 
 always @(posedge clk) begin
-    if(reset == 1'b1) begin
+    if(!rst_n) begin
         state <= FETCH;
     end else begin
         case (state)
@@ -85,13 +85,18 @@ always @(posedge clk) begin
                 else
                     state <= MEMWRITE;
             end
-            MEMREAD: state <= MEMWB;
+            MEMREAD: begin
+                if(memory_response)
+                    state <= MEMWB;
+                else
+                    state <= MEMREAD;
+            end
             MEMWRITE: begin
                 if(memory_response)
                     state <= FETCH;
                 else
                     state <= MEMWRITE;
-                end
+            end
             EXECUTER: state <= ALUWB;
             ALUWB: state <= FETCH;
             EXECUTEI: state <= ALUWB;
@@ -106,108 +111,108 @@ always @(posedge clk) begin
 end
 
 always @(*) begin
-    pc_write_cond       <= 1'b0;
-    pc_write            <= 1'b0;
-    ir_write            <= 1'b0;
-    lorD                <= 1'b0;
-    memory_read         <= 1'b0;
-    memory_write        <= 1'b0;
-    memory_to_reg       <= 1'b0;
-    pc_source           <= 1'b0;
-    aluop               <= 2'b00;
-    alu_src_b           <= 2'b00;
-    alu_src_a           <= 2'b00;
-    reg_write           <= 1'b0;
-    is_immediate        <= 1'b0;
+    pc_write_cond = 1'b0;
+    pc_write      = 1'b0;
+    ir_write      = 1'b0;
+    lorD          = 1'b0;
+    memory_read   = 1'b0;
+    memory_write  = 1'b0;
+    memory_to_reg = 1'b0;
+    pc_source     = 1'b0;
+    aluop         = 2'b00;
+    alu_src_b     = 2'b00;
+    alu_src_a     = 2'b00;
+    reg_write     = 1'b0;
+    is_immediate  = 1'b0;
 
     case (state)
         FETCH: begin
-            memory_read <= 1'b1;
+            memory_read = 1'b1;
         end
 
         VALIDATE_FETCH: begin
-            memory_read <= 1'b1;
-            ir_write    <= 1'b1;
-            pc_write    <= 1'b1;
-            alu_src_b   <= 2'b01;
+            memory_read = 1'b1;
+            ir_write    = 1'b1;
+            pc_write    = 1'b1;
+            alu_src_b   = 2'b01;
         end
 
         DECODE: begin
-            alu_src_a <= 2'b10;
-            alu_src_b <= 2'b10;
+            alu_src_a = 2'b10;
+            alu_src_b = 2'b10;
         end
 
         MEMADR: begin
-            alu_src_a <= 2'b01;
-            alu_src_b <= 2'b10;
+            alu_src_a = 2'b01;
+            alu_src_b = 2'b10;
         end
         
         MEMREAD: begin
-            memory_read <= 1'b1;
-            lorD        <= 1'b1;
+            memory_read = 1'b1;
+            lorD        = 1'b1;
         end
 
         MEMWRITE: begin
-            memory_write <= 1'b1;
-            lorD         <= 1'b1;
+            memory_write = 1'b1;
+            lorD         = 1'b1;
         end
 
         MEMWB: begin
-            reg_write     <= 1'b1;
-            memory_to_reg <= 1'b1;
+            reg_write     = 1'b1;
+            memory_to_reg = 1'b1;
         end
 
         EXECUTER: begin
-            alu_src_a <= 2'b01;
-            aluop     <= 2'b10;
+            alu_src_a = 2'b01;
+            aluop     = 2'b10;
         end
 
         ALUWB: begin
-            reg_write <= 1'b1;
+            reg_write = 1'b1;
         end
 
         EXECUTEI: begin
-            alu_src_a   <= 2'b01;
-            alu_src_b   <= 2'b10;
-            aluop        <= 2'b10;
-            is_immediate <= 1'b1;
+            alu_src_a    = 2'b01;
+            alu_src_b    = 2'b10;
+            aluop        = 2'b10;
+            is_immediate = 1'b1;
         end
 
         JAL: begin
-            alu_src_a <= 2'b10;
-            alu_src_b <= 2'b01; // 01
-            pc_write  <= 1'b1;
-            pc_source <= 1'b1;
+            alu_src_a = 2'b10;
+            alu_src_b = 2'b01; // 01
+            pc_write  = 1'b1;
+            pc_source = 1'b1;
         end
 
         BRANCH: begin
-            alu_src_a     <= 2'b01;
-            aluop         <= 2'b01;
-            pc_write_cond <= 1'b1;
-            pc_source     <= 1'b1;
+            alu_src_a     = 2'b01;
+            aluop         = 2'b01;
+            pc_write_cond = 1'b1;
+            pc_source     = 1'b1;
         end
 
         JALR_PC: begin // Ciclo intermediario para calcular o endereço a ser gravado no PC
-            alu_src_a <= 2'b01;
-            alu_src_b <= 2'b10;
+            alu_src_a = 2'b01;
+            alu_src_b = 2'b10;
         end
 
         JALR: begin
-            alu_src_a    <= 2'b10;
-            alu_src_b    <= 2'b01; // 01
-            pc_write     <= 1'b1;
-            pc_source    <= 1'b1;
-            is_immediate <= 1'b1;
+            alu_src_a    = 2'b10;
+            alu_src_b    = 2'b01; // 01
+            pc_write     = 1'b1;
+            pc_source    = 1'b1;
+            is_immediate = 1'b1;
         end
 
         AUIPC: begin
-            alu_src_a <= 2'b10;
-            alu_src_b <= 2'b10;
+            alu_src_a = 2'b10;
+            alu_src_b = 2'b10;
         end
 
         LUI: begin
-            alu_src_a <= 2'b11;
-            alu_src_b <= 2'b10;
+            alu_src_a = 2'b11;
+            alu_src_b = 2'b10;
         end
     endcase
 end

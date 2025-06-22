@@ -10,26 +10,27 @@ module top (
 wire reset_o;
 
 ResetBootSystem #(
-    .CYCLES(20)
+    .CYCLES   (20)
 ) ResetBootSystem(
-    .clk(clk),
-    .reset_o(reset_o)
+    .clk      (clk),
+    .resetn_o (reset_o),
+    
 );
 
 Baby_Risco_5_SOC #(
-    .CLOCK_FREQ(25000000),
-    .BIT_RATE(115200),
-    .MEMORY_SIZE(4096),
-    .MEMORY_FILE("../../software/memory/addi.hex"),
-    .GPIO_WIDHT(6),
-    .UART_BUFFER_SIZE(16)
+    .CLOCK_FREQ       (25000000),
+    .BIT_RATE         (115200),
+    .MEMORY_SIZE      (4096),
+    .MEMORY_FILE      ("../../software/memory/addi.hex"),
+    .GPIO_WIDHT       (6),
+    .UART_BUFFER_SIZE (16)
 ) SOC(
-    .clk(clk),
-    .reset(reset_o),
-    .leds(led),
-    .rx(rx),
-    .tx(tx),
-    .gpios(gpios)
+    .clk   (clk),
+    .rst_n (reset_o),
+    .leds  (led),
+    .rx    (rx),
+    .tx    (tx),
+    .gpios (gpios)
 );
 
 
